@@ -18,6 +18,11 @@
 #include <cstddef>
 
 namespace as {
+	/*!
+		\brief A simple memory allocation class.
+		\date 17th January 2017
+		\author Adam Smith
+	*/
 	class memory_allocator {
 	public:
 		/*!

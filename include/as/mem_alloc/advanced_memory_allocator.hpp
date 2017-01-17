@@ -18,12 +18,35 @@
 #include "memory_allocator.hpp"
 
 namespace as {
+	/*!
+		\brief Expands on the functionality of memory_allocator.
+		\date 17th January 2017
+		\author Adam Smith
+	*/
 	class advanced_memory_allocator : public memory_allocator {
 	public:
+		/*!
+			\brief Destroy the allocator and free any currently allocated memory.
+		*/
 		virtual ~advanced_memory_allocator() throw() {}
 
+		/*!
+			\brief Return the size of a block of memory allocated from this allocator.
+			\param aPtr The starting address of the block.
+			\return The size in bytes.
+		*/
 		virtual size_t size_of(const void*) const throw() = 0;
+
+		/*!
+			\brief Return the total number of bytes currently allocated by this allocator.
+			\return The total allocated memory in bytes.
+		*/
 		virtual size_t allocated_bytes() const throw() = 0;
+
+		/*!
+			\brief Return the largest block of memory that can be allocated by this allocator.
+			\return The size in bytes.
+		*/
 		virtual size_t max_allocation_size() const throw() = 0;
 	};
 }
