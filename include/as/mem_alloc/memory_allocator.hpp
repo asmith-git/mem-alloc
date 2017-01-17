@@ -20,9 +20,23 @@
 namespace as {
 	class memory_allocator {
 	public:
+		/*!
+			\brief Destroy the allocator and free any currently allocated memory.
+		*/
 		virtual ~memory_allocator() throw() {}
-		
+
+		/*!
+			\brief Allocate memory.
+			\param aBytes The number of bytes to allocate.
+			\return The starting address of the memory or nullptr if allocation failed.
+		*/
 		virtual void* allocate(size_t) throw() = 0;
+
+		/*!
+			\brief Free memory that was allocated from this allocator.
+			\param aPtr The starting address of the memory.
+			\return False if the memory failed to be deallocated.
+		*/
 		virtual bool free(void*) throw() = 0;
 	};
 }
