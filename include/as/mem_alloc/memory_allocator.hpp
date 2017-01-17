@@ -1,3 +1,6 @@
+#ifndef ASMITH_MEMORY_ALLOCATOR_HPP
+#define ASMITH_MEMORY_ALLOCATOR_HPP
+
 // Copyright 2017 Adam Smith
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -22,3 +25,5 @@ namespace as {
 		virtual bool free(void*) throw() = 0;
 	};
 }
+
+#endif
