@@ -79,9 +79,7 @@ namespace as {
 		const auto end = mClosedBlocks.end();
 		for(auto i = mClosedBlocks.begin(); i != end; ++i) {
 			if(i->first == aPtr) {
-#ifdef ASMITH_MEMORY_POOL_NO_SPLITS
-				mOpenBlocks.push_back(*i);
-#else
+#ifndef ASMITH_MEMORY_POOL_NO_SPLITS
 				// Try to merge with adjacent open blocks
 				bool merged = false;
 				for(block_t& j : mOpenBlocks) {
@@ -97,8 +95,9 @@ namespace as {
 					}
 				}
 				//! \todo If block was merged then try to merge it again
-				if(! merged) mOpenBlocks.push_back(*i);
+				if(! merged)
 #endif
+				mOpenBlocks.push_back(*i);
 				mClosedBlocks.erase(i);
 				return true;
 			}
