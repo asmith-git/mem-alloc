@@ -18,7 +18,7 @@
 #include "memory_allocator.hpp"
 
 namespace as {
-	class advanced_memory_allocator {
+	class advanced_memory_allocator : public memory_allocator {
 		virtual ~advanced_memory_allocator() throw() {}
 
 		virtual size_t size_of(const void*) const throw() = 0;
