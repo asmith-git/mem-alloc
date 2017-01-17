@@ -45,11 +45,16 @@ namespace as {
 		// Check for an open block that is large enough
 		const auto end = mOpenBlocks.end();
 		for(auto i = mOpenBlocks.begin(); i != end; ++i) {
+#ifdef ASMITH_MEMORY_POOL_NO_SPLITS
+			if(i->second >= aBytes) {
+#else
 			if(i->second == aBytes) {
+#endif
 				const block_t tmp = *i;
 				mOpenBlocks.erase(i);
 				mClosedBlocks.push_back(tmp);
 				return tmp.first;
+#ifndef ASMITH_MEMORY_POOL_NO_SPLITS
 			}else if(i->second > aBytes) {
 				// Split the block into two
 				block_t tmp = *i;
@@ -57,6 +62,7 @@ namespace as {
 				tmp.second = aBytes;
 				mClosedBlocks.push_back(tmp);
 				return tmp.first;
+#endif
 			}
 		}
 
@@ -75,7 +81,9 @@ namespace as {
 			if(i->first == aPtr) {
 				mOpenBlocks.push_back(*i);
 				mClosedBlocks.erase(i);
+#ifndef ASMITH_MEMORY_POOL_NO_SPLITS
 				//! \todo Merge open blocks if adjacent
+#endif
 				return true;
 			}
 		}
