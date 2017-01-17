@@ -19,6 +19,11 @@
 #include "advanced_memory_allocator.hpp"
 
 namespace as {
+	/*!
+		\brief A memory_allocator that caches memory when freed for later re-use.
+		\date 17th January 2017
+		\author Adam Smith
+	*/
 	class memory_pool : public advanced_memory_allocator {
 	private:
 		typedef std::pair<void*, size_t> block_t;	//!< A block of memory
