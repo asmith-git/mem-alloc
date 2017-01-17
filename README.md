@@ -1,2 +1,2 @@
-# mem-alloc
-Memory Allocators For C++
+# Simple Memory Allocators for C++
+Simple memory allocation interface for C++ with some implementations.
