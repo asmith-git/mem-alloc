@@ -20,11 +20,18 @@
 #include "advanced_memory_allocator.hpp"
 
 namespace as {
+	/*!
+		\brief Provides the missing functionality to upgrade a memory_allocator to a advanced_memory_allocator.
+		\tparam ALLOCATOR The memory_allocator implementation to wrap.
+		\tparam MAX_ALLOC The maxium allocation size of ALLOCATOR.
+		\date 17th January 2017
+		\author Adam Smith
+	*/
 	template<class ALLOCATOR, const size_t MAX_ALLOC = UINT32_MAX>
 	class advanced_upgrade_wrapper : public advanced_memory_allocator {
 	private:
-		ALLOCATOR mAllocator;
-		std::map<const void*, size_t> mAllocations;
+		ALLOCATOR mAllocator;						//!< The allocator being wrapped.
+		std::map<const void*, size_t> mAllocations;	//!< The memory blocks currently allocated.
 	public:
 		~advanced_upgrade_wrapper() throw() {
 			mAllocations.clear();
