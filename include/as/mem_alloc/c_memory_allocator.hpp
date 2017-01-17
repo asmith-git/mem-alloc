@@ -18,6 +18,11 @@
 #include "memory_allocator.hpp"
 
 namespace as {
+	/*!
+		\brief A memory_allocator that uses the C standard libary functions malloc and free.
+		\date 17th January 2017
+		\author Adam Smith
+	*/
 	class c_memory_allocator : public memory_allocator {
 	public:
 		// Inherited from memory_allocator

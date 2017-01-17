@@ -18,6 +18,11 @@
 #include "memory_allocator.hpp"
 
 namespace as {
+	/*!
+		\brief A memory_allocator that uses the C++ functions operator new and operator delete.
+		\date 17th January 2017
+		\author Adam Smith
+	*/
 	class cpp_memory_allocator : public memory_allocator {
 	public:
 		// Inherited from memory_allocator
