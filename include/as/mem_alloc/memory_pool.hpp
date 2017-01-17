@@ -21,6 +21,7 @@
 namespace as {
 	/*!
 		\brief A memory_allocator that caches memory when freed for later re-use.
+		\detail If 'ASMITH_MEMORY_POOL_NO_SPLITS' is defined then block splitting will be disabled. Which will result in faster allocation and freeing of memory, but more memory may be allocated.
 		\date 17th January 2017
 		\author Adam Smith
 	*/
