@@ -17,7 +17,7 @@
 
 #include <cstdint>
 #include <map>
-#include "advanced_upgrade_wrapper.hpp"
+#include "advanced_memory_allocator.hpp"
 
 namespace as {
 	template<class ALLOCATOR, const size_t MAX_ALLOC = UINT32_MAX>
