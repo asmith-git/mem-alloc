@@ -19,6 +19,7 @@
 
 namespace as {
 	class memory_allocator {
+	public:
 		virtual ~memory_allocator() throw() {}
 		
 		virtual void* allocate(size_t) throw() = 0;

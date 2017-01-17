@@ -19,6 +19,7 @@
 
 namespace as {
 	class advanced_memory_allocator : public memory_allocator {
+	public:
 		virtual ~advanced_memory_allocator() throw() {}
 
 		virtual size_t size_of(const void*) const throw() = 0;
