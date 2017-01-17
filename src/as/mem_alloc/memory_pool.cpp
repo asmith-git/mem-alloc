@@ -45,10 +45,16 @@ namespace as {
 		// Check for an open block that is large enough
 		const auto end = mOpenBlocks.end();
 		for(auto i = mOpenBlocks.begin(); i != end; ++i) {
-			if(i->second >= aBytes) {
-				//! \todo Split block if it is too large
+			if(i->second == aBytes) {
 				const block_t tmp = *i;
 				mOpenBlocks.erase(i);
+				mClosedBlocks.push_back(tmp);
+				return tmp.first;
+			}else if(i->second > aBytes) {
+				// Split the block into two
+				block_t tmp = *i;
+				i->second -= aBytes;
+				tmp.second = aBytes;
 				mClosedBlocks.push_back(tmp);
 				return tmp.first;
 			}
