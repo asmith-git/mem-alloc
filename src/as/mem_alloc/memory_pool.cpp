@@ -79,11 +79,27 @@ namespace as {
 		const auto end = mClosedBlocks.end();
 		for(auto i = mClosedBlocks.begin(); i != end; ++i) {
 			if(i->first == aPtr) {
+#ifdef ASMITH_MEMORY_POOL_NO_SPLITS
 				mOpenBlocks.push_back(*i);
-				mClosedBlocks.erase(i);
-#ifndef ASMITH_MEMORY_POOL_NO_SPLITS
-				//! \todo Merge open blocks if adjacent
+#else
+				// Try to merge with adjacent open blocks
+				bool merged = false;
+				for(block_t& j : mOpenBlocks) {
+					if(static_cast<uint8_t*>(j.first) + j.second == i->first) {
+						j.second += i->second;
+						merged = true;
+						break;
+					}else if (static_cast<uint8_t*>(i->first) + i->second == j.first) {
+						j.first = i->first;
+						j.second += i->second;
+						merged = true;
+						break;
+					}
+				}
+				//! \todo If block was merged then try to merge it again
+				if(! merged) mOpenBlocks.push_back(*i);
 #endif
+				mClosedBlocks.erase(i);
 				return true;
 			}
 		}
