@@ -13,10 +13,46 @@
 // limitations under the License.
 
 #include "as/mem_alloc/default_allocator.hpp"
+#include "as/mem_alloc/c_memory_allocator.hpp"
+#include "as/mem_alloc/advanced_upgrade_wrapper.hpp"
 
 namespace as {
-	void set_default_allocator(memory_allocator&);
-	void set_default_allocator(advanced_memory_allocator&);
-	advanced_memory_allocator& get_default_allocator();
+
+	memory_allocator* ALLOCATOR = nullptr;
+	advanced_memory_allocator* ADV_ALLOCATOR = nullptr;
+
+	class allocator_wrapper : public memory_allocator {
+	public:
+		// Inherited from memory_allocator
+		void* allocate(size_t aBytes) throw() override {
+			return ALLOCATOR->allocate(aBytes);
+		}
+
+		bool free(void* aPtr) throw() override {
+			return ALLOCATOR->free(aPtr);
+		}
+	};
+
+	advanced_upgrade_wrapper<allocator_wrapper> WRAPPER;
+
+	void set_default_allocator(memory_allocator& aAllocator) {
+		ALLOCATOR = &aAllocator;
+		ADV_ALLOCATOR = &WRAPPER;
+	}
+
+	void set_default_allocator(advanced_memory_allocator& aAllocator) {
+		ADV_ALLOCATOR = &aAllocator;
+	}
+
+	advanced_memory_allocator& get_default_allocator() {
+		static bool ONCE = true;
+		static c_memory_allocator C_ALLOCATOR;
+		if(ONCE) {
+			ONCE = false; 
+			set_default_allocator(C_ALLOCATOR);
+		}
+		return *ADV_ALLOCATOR;
+	}
+
 
 }
