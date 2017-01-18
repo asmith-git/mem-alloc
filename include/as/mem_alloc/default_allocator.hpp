@@ -18,8 +18,30 @@
 #include "advanced_memory_allocator.hpp"
 
 namespace as {
+	/*!
+		\brief Set the default allocator.
+		\detail The allocator must be kept within scope until another allocator is set or the program terminates.
+		\param aAllocator The allocator to set as default
+		\see get_default_allocator
+	*/
 	void set_default_allocator(memory_allocator&);
+
+	/*!
+		\brief Set the default allocator.
+		\detail The allocator must be kept within scope until another allocator is set or the program terminates.
+		\param aAllocator The allocator to set as default
+		\see get_default_allocator
+	*/
 	void set_default_allocator(advanced_memory_allocator&);
+
+	/*!
+		\brief Return the default allocator
+		\detail If ASMITH_DEFAULT_ALLOCATOR_NO_THREAD_PROTECTION is defined then multi-threading protection for the allocator will be removed, but will improve performance.
+		If set_default_allocator has been set then a c_memory_allocator will be used.
+		\return The default allocator
+		\see set_default_allocator
+		\see c_memory_allocator
+	*/
 	advanced_memory_allocator& get_default_allocator();
 }
 
