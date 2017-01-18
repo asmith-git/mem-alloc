@@ -65,7 +65,7 @@ namespace as {
 
 		bool free(void* aPtr) throw() override {
 			const auto i = mAllocations.find(aPtr);
-			if(i == mAllocations.end() || ! mAllocations.free(aPtr)) return false;
+			if(i == mAllocations.end() || ! mAllocator.free(aPtr)) return false;
 			mAllocations.erase(i);
 			return true;
 		}
